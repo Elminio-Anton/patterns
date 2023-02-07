@@ -1,0 +1,10 @@
+const removeDuplicates = ({source:arr1,toDelete:arr2})=>{
+  const mutatedArr2 = arr2.slice()
+  return arr1.reduce((result,element)=>{
+    if(!mutatedArr2.includes(element))
+      result.push(element)
+    else
+      mutatedArr2.splice(mutatedArr2.indexOf(element),1)
+    return result
+  },[])
+}
