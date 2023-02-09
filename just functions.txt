@@ -8,3 +8,10 @@ const removeDuplicates = ({source:arr1,toDelete:arr2})=>{
     return result
   },[])
 }
+
+const createUniquePairs = (arrays)=>{
+  if(arrays.length===1)
+    return []
+  else 
+    return [].concat(arrays.slice(1).map((array=>[group,arrays[0]])),createUniquePairs(arrays.slice(1)))
+}
