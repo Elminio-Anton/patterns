@@ -23,3 +23,36 @@ const findFactors = (number=0)=>{
       result.push(i)
   return result
 }
+
+let isPrime = (number) => {
+  let count = 0
+  for (let i = 1; i <= number; i++) {
+    if (number % i === 0) {
+      count++
+      if (count > 2) break
+    }
+  }
+  return count <= 2
+}
+let createPrimeArray = (length) => {
+	const primesOfThePrimes = []
+	for (let i = 2; i <= length; i++) {
+		if (isPrime(i)) primesOfThePrimes.push(i)
+	}
+	return primesOfThePrimes.slice()
+}
+let allPrimes = createPrimeArray(10000)
+function primeFactors(n,primes = allPrimes){
+  if(n%primes[0]===0){
+      let maxPower = 10
+      let power = 0
+      for(let i = 1; i <= maxPower; i++){
+        if(n % (primes[0] ** i) === 0)
+           power = i
+      }
+      return (power>1?`(${primes[0]}**${power})`:`(${primes[0]})`) + primeFactors(n/(primes[0]**power),primes.slice(1))
+  }
+  if(primes.length===1)
+    return (isPrime(n)&&n>1)?`(${n})`:''
+  return primeFactors(n,primes.slice(1))
+}
