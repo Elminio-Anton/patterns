@@ -81,7 +81,6 @@ const addDragScroll = ({ scrollableNode, speed = 1 }) => {
   if (Number.isNaN(speed) || speed <= 0 || !(typeof speed === "number"))
     throw new Error(`Wrong speed:${speed}`);
   let previousX = null;
-  let currentX = null;
 
   scrollableNode.addEventListener("mousedown", (event) => {
     scrollableNode.classList.add("active-drag-scroll");
@@ -100,9 +99,10 @@ const addDragScroll = ({ scrollableNode, speed = 1 }) => {
     previousX = x;
   };
 
-  scrollableNode.addEventListener("mousemove", ({ x }) => {
+  scrollableNode.addEventListener("mousemove", (event) => {
+    event.preventDefault()
     if (scrollableNode.classList.contains("active-drag-scroll")) {
-      scroll(x);
+      scroll(event.x);
     }
   });
 };
