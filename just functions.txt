@@ -56,3 +56,16 @@ function primeFactors(n,primes = allPrimes){
     return (isPrime(n)&&n>1)?`(${n})`:''
   return primeFactors(n,primes.slice(1))
 }
+
+  function getAllProperties(obj){
+    var allProps = []
+      , curr = obj
+    do{
+        var props = Object.getOwnPropertyNames(curr)
+        props.forEach(function(prop){
+            if (allProps.indexOf(prop) === -1)
+                allProps.push(prop)
+        })
+    }while(curr = Object.getPrototypeOf(curr))
+    return allProps
+}
