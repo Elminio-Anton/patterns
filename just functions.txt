@@ -69,3 +69,40 @@ function primeFactors(n,primes = allPrimes){
     }while(curr = Object.getPrototypeOf(curr))
     return allProps
 }
+
+const addDragScroll = ({ scrollableNode, speed = 1 }) => {
+  //plus 4 events for scrollableNode
+  //speed: make it bigger then 1 to scroll faster
+  //adds "active-drag-scroll" class to scrollableNode when drag is active
+  //
+
+  if (!(scrollableNode instanceof Node))
+    throw new Error("scrollableNode is not a Node");
+  if (Number.isNaN(speed) || speed <= 0 || !(typeof speed === "number"))
+    throw new Error(`Wrong speed:${speed}`);
+  let previousX = null;
+  let currentX = null;
+
+  scrollableNode.addEventListener("mousedown", (event) => {
+    scrollableNode.classList.add("active-drag-scroll");
+    previousX = event.x;
+  });
+  scrollableNode.addEventListener("mouseup", (event) => {
+    scrollableNode.classList.remove("active-drag-scroll");
+  });
+  scrollableNode.addEventListener("mouseleave", (event) => {
+    scrollableNode.classList.remove("active-drag-scroll");
+  });
+
+  const scroll = (x) => {
+    scrollableNode.scrollLeft =
+      scrollableNode.scrollLeft + (previousX - x) * speed;
+    previousX = x;
+  };
+
+  scrollableNode.addEventListener("mousemove", ({ x }) => {
+    if (scrollableNode.classList.contains("active-drag-scroll")) {
+      scroll(x);
+    }
+  });
+};
